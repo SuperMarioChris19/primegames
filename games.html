@@ -80,92 +80,12 @@
             color: #a4a4a8;
             line-height: 1.4;
         }
-    </style>
-</head>
-<body>
 
-    <nav class="sidebar">
-        <div class="sidebar-brand">Prime Games</div>
-        <ul class="sidebar-menu">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="games.html" class="active">Games</a></li>
-            <li><a href="adminpanel.html">Admin Panel</a></li>
-        </ul>
-    </nav>
+        /* Hidden Utility Class */
+        .hidden { display: none !important; }
 
-    <main class="main-content">
-        <div id="directory-view">
-            <h1>All Games</h1>
-            <div class="games-grid">
-                
-                <div class="game-card" onclick="loadGame('Slope', 'aHR0cHM6Ly9zbG9wZXJ1bjIuaW8v')">
-                    <div class="game-thumbnail">
-                        <img src="slope.png" alt="Slope Cover Artwork">
-                    </div>
-                    <div class="game-info">
-                        <h3 class="game-title">Slope</h3>
-                        <p class="game-desc">Drive your ball down a massive 3D course obstacle track for as long as you can!</p>
-                    </div>
-                </div>
-
-                <div class="game-card" onclick="loadGame('Cookie Clicker', 'aHR0cHM6Ly9vcnRlaWwuZGFzaG5ldC5vcmcvY29va2llY2xpY2tlci8=')">
-                    <div class="game-thumbnail">
-                        <img src="cookie.png" alt="Cookie Clicker Cover Artwork">
-                    </div>
-                    <div class="game-info">
-                        <h3 class="game-title">Cookie Clicker</h3>
-                        <p class="game-desc">Bake astronomical amounts of cookies by clicking a giant cookie and hiring helpers.</p>
-                    </div>
-                </div>
-
-                <div class="game-card" onclick="loadGame('Dash', 'aHR0cHM6Ly9nZW9tZXRyeWxpdGVwYy5pby8=')">
-                    <div class="game-thumbnail">
-                        <img src="dash.png" alt="Dash Cover Artwork">
-                    </div>
-                    <div class="game-info">
-                        <h3 class="game-title">Dash</h3>
-                        <p class="game-desc">Navigate through a series of challenging levels in this fast-paced arcade game.</p>
-                    </div>
-                </div>
-
-                <div class="game-card" onclick="loadGame('Baldi', 'aHR0cHM6Ly9rYmhnYW1lcy5jb20vZ2FtZS9iYWxkaXMtYmFzaWNzLWNsYXNzaWMtb25saW5l')">
-                    <div class="game-thumbnail">
-                        <img src="baldi.png" alt="Baldi Cover Artwork">
-                    </div>
-                    <div class="game-info">
-                        <h3 class="game-title">Baldi</h3>
-                        <p class="game-desc">Collect notebooks and avoid the teacher in this educational adventure game.</p>
-                    </div>
-                </div>
-
-                <div class="game-card" onclick="loadGame('Eaglercraft', 'aHR0cHM6Ly9lYWdsZXJjcmFmdDEtOC5naXRodWIuaW8v')">
-                    <div class="game-thumbnail">
-                        <img src="eaglercraft.png" alt="Eaglercraft Cover Artwork">
-                    </div>
-                    <div class="game-info">
-                        <h3 class="game-title">Eaglercraft</h3>
-                        <p class="game-desc">Play a retro-style Minecraft clone in your browser.</p>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-    </main>
-
-    <script>
-        function loadGame(title, encodedUrl) {
-            // 1. Decode the URL string inside JavaScript execution space 
-            const decodedUrl = atob(encodedUrl);
-            
-            // 2. Launch the URL into a new isolated browsing instance rather than an iframe
-            const gameWindow = window.open(decodedUrl, '_blank', 'noopener,noreferrer');
-            
-            if (gameWindow) {
-                gameWindow.focus();
-            } else {
-                alert("Pop-up blocked! Please toggle pop-up permissions for this page to clear window generation hooks.");
-            }
-        }
-    </script>
-</body>
-</html>
+        /* Game Stage (Iframe Container) */
+        #game-stage {
+            margin-top: 20px;
+            background-color: #1a1a1e;
+            border: 2px solid #292930;
