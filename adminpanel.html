@@ -123,25 +123,15 @@
     </main>
 
     <script>
-        const PASSCODE = "Mikejacksonhehe123";
-
-        // Decrypts the array back into the actual password string to check against user input
-        function decryptPasscode(arr) {
-            return arr.map((num, index) => {
-                // Alternating algorithm logic to correctly extract letters vs numbers
-                let offset = (index < 15) ? 43 : -36; 
-                return String.fromCharCode(num + offset);
-            }).join('');
-        }
+        // Plain text admin passcode
+        const MASTER_CODE = "mikejacksonhehe";
 
         function verifyAdminCode() {
             const inputCode = document.getElementById('admin-code').value;
             const errorElement = document.getElementById('auth-error');
-            
-            // Decrypt the secret key on the fly
-            const correctPasscode = (PASSCODE);
 
-            if (inputCode === correctPasscode) {
+            // Simple direct comparison
+            if (inputCode === MASTER_CODE) {
                 // Reveal configuration elements, hide entry gate
                 document.getElementById('auth-section').classList.add('hidden');
                 document.getElementById('control-section').classList.remove('hidden');
