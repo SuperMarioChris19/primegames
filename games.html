@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Games - Games</title>
+    <link rel="icon" type="image/x-icon" href="icon.ico">
+    
+    <style>
+        /* Shared Base Styles */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { display: flex; background-color: #121214; color: #ffffff; min-height: 100vh; overflow-x: hidden; }
+        
+        /* Sidebar Styling */
+        .sidebar { width: 250px; background-color: #1a1a1e; display: flex; flex-direction: column; border-right: 2px solid #292930; position: fixed; height: 100vh; z-index: 10; }
+        .sidebar-brand { padding: 20px; font-size: 24px; font-weight: bold; color: #ff4757; text-transform: uppercase; border-bottom: 2px solid #292930; }
+        .sidebar-menu { list-style: none; padding: 20px 0; }
+        .sidebar-menu li a { display: block; padding: 15px 25px; color: #a4a4a8; text-decoration: none; font-size: 18px; border-left: 4px solid transparent; }
+        .sidebar-menu li a:hover, .sidebar-menu li a.active { color: #ffffff; background-color: #292930; border-left: 4px solid #ff4757; }
+        
+        /* Main Content */
+        .main-content { margin-left: 250px; padding: 40px; width: calc(100% - 250px); transition: all 0.3s ease; }
+        h1 { margin-bottom: 30px; font-size: 36px; }
+
+        /* Games Grid Layout */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .game-card {
+            background-color: #1a1a1e;
+            border: 2px solid #292930;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.2s, border-color 0.2s;
+            cursor: pointer;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            border-color: #ff4757;
+        }
+
+        /* Image Thumbnail Container */
+        .game-thumbnail {
+            height: 150px;
+            background-color: #292930;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Thumbnail Image Scaling Rules */
+        .game-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Keeps aspect ratio clean without stretching */
+            transition: transform 0.3s ease;
+        }
+
+        .game-card:hover .game-thumbnail img {
+            transform: scale(1.05); /* Slight zoom effect on hover */
+        }
+
+        .game-info {
+            padding: 15px;
+        }
+
+        .game-title {
+            font-size: 20px;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+
+        .game-desc {
+            font-size: 14px;
+            color: #a4a4a8;
+            line-height: 1.4;
+        }
+
+        /* Hidden Utility Class */
+        .hidden { display: none !important; }
+
+        /* Game Stage (Iframe Container) */
+        #game-stage {
+            margin-top: 20px;
+            background-color: #1a1a1e;
+            border: 2px solid #292930;
+            border-radius: 12px;
+            padding: 20px;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .stage-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .frame-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 6px;
+            background-color: #000;
+        }
+
+        .frame-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Action Buttons */
+        .btn-action {
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-fullscreen { background-color: #2ed573; }
+        .btn-fullscreen:hover { background-color: #26b962; }
+
+        .btn-close { background-color: #ff4757; }
+        .btn-close:hover { background-color: #ff2f43; }
+
+        /* Fullscreen Wrapper Styling */
+        .frame-wrapper:fullscreen {
+            padding-bottom: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="sidebar">
+        <div class="sidebar-brand">Prime Games</div>
+        <ul class="sidebar-menu">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="games.html" class="active">Games</a></li>
+            <li><a href="adminpanel.html">Admin Panel</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <div id="directory-view">
+            <h1>All Games</h1>
+            <div class="games-grid">
+                
+                <div class="game-card" onclick="loadGame('Slope', 'https://sloperun2.io/')">
+                    <div class="game-thumbnail">
+                        <img src="slope.png" alt="Slope Cover Artwork">
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">Slope</h3>
+                        <p class="game-desc">Drive your ball down a massive 3D course obstacle track for as long as you can!</p>
+                    </div>
+                </div>
+
+                <div class="game-card" onclick="loadGame('Cookie Clicker', 'https://orteil.dashnet.org/cookieclicker/')">
+                    <div class="game-thumbnail">
+                        <img src="cookie.png" alt="Cookie Clicker Cover Artwork">
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">Cookie Clicker</h3>
+                        <p class="game-desc">Bake astronomical amounts of cookies by clicking a giant cookie and hiring helpers.</p>
+                    </div>
+                </div>
+
+                <div class="game-card" onclick="loadGame('Dash', 'https://geometrylitepc.io/')">
+                    <div class="game-thumbnail">
+                        <img src="dash.png" alt="Dash Cover Artwork">
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">Dash</h3>
+                        <p class="game-desc">Navigate through a series of challenging levels in this fast-paced arcade game.</p>
+                    </div>
+                </div>
+
+                <div class="game-card" onclick="loadGame('Baldi', 'https://kbhgames.com/game/baldis-basics-classic-online')">
+                    <div class="game-thumbnail">
+                        <img src="baldi.png" alt="Baldi Cover Artwork">
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">Baldi</h3>
+                        <p class="game-desc">Collect notebooks and avoid the teacher in this educational adventure game.</p>
+                    </div>
+                </div>
+
+                <div class="game-card" onclick="loadGame('Eaglercraft', 'https://eaglercraft1-8.github.io/')">
+                    <div class="game-thumbnail">
+                        <img src="eaglercraft.png" alt="Eaglercraft Cover Artwork">
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">Eaglercraft</h3>
+                        <p class="game-desc">Play a retro-style Minecraft clone in your browser.</p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+        <div id="game-stage" class="hidden">
+            <div class="stage-header">
+                <h2 id="current-game-title">Game Title</h2>
+                <div class="header-buttons">
+                    <button class="btn-action btn-fullscreen" onclick="goFullscreen()">📺 Fullscreen</button>
+                    <button class="btn-action btn-close" onclick="closeGame()">Back to Games</button>
+                </div>
+            </div>
+            <div id="game-wrapper" class="frame-wrapper">
+                <iframe id="game-frame" src="" allowfullscreen></iframe>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function loadGame(title, url) {
+            document.getElementById('directory-view').classList.add('hidden');
+            document.getElementById('current-game-title').innerText = title;
+            document.getElementById('game-frame').src = url;
+            document.getElementById('game-stage').classList.remove('hidden');
+        }
+
+        function closeGame() {
+            document.getElementById('game-frame').src = "";
+            document.getElementById('game-stage').classList.add('hidden');
+            document.getElementById('directory-view').classList.remove('hidden');
+        }
+
+        function goFullscreen() {
+            const gameContainer = document.getElementById('game-wrapper');
+
+            if (gameContainer.requestFullscreen) {
+                gameContainer.requestFullscreen();
+            } else if (gameContainer.webkitRequestFullscreen) {
+                gameContainer.webkitRequestFullscreen();
+            } else if (gameContainer.msRequestFullscreen) {
+                gameContainer.msRequestFullscreen();
+            }
+        }
+    </script>
+</body>
+</html>

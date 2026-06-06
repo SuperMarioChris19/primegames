@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Games - Home</title>
+    <link rel="icon" type="image/x-icon" href="icon.ico">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            background-color: #121214;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 250px;
+            background-color: #1a1a1e;
+            display: flex;
+            flex-direction: column;
+            border-right: 2px solid #292930;
+            position: fixed;
+            height: 100vh;
+        }
+
+        .sidebar-brand {
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff4757;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid #292930;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 20px 0;
+        }
+
+        .sidebar-menu li a {
+            display: block;
+            padding: 15px 25px;
+            color: #a4a4a8;
+            text-decoration: none;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-menu li a:hover, .sidebar-menu li a.active {
+            color: #ffffff;
+            background-color: #292930;
+            border-left: 4px solid #ff4757;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            margin-left: 250px;
+            padding: 40px;
+            width: calc(100% - 250px);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 36px;
+        }
+
+        /* Announcement Box */
+        .announcement-box {
+            background: linear-gradient(135deg, #1e1e24 0%, #2a2a35 100%);
+            border: 1px solid #3e3e4a;
+            border-radius: 8px;
+            padding: 25px;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .announcement-box h2 {
+            color: #ff4757;
+            margin-bottom: 10px;
+            font-size: 20px;
+            text-transform: uppercase;
+        }
+
+        #announcement-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #e0e0e6;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="sidebar">
+        <div class="sidebar-brand">Prime Games</div>
+        <ul class="sidebar-menu">
+            <li><a href="home.html" class="active">Home</a></li>
+            <li><a href="games.html">Games</a></li>
+            <li><a href="adminpanel.html">Admin Panel</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <h1>Welcome to Prime Games</h1>
+        <p>Your ultimate hub for instant browser gaming.</p>
+
+        <div class="announcement-box">
+            <h2>📢 Latest Announcement</h2>
+            <p id="announcement-text">Loading announcements...</p>
+        </div>
+    </main>
+
+    <script>
+        // Function to load the global announcement from LocalStorage
+        function loadAnnouncement() {
+            const defaultAnnouncement = "Welcome to the grand opening of Prime Games! Check out the games tab to start playing.";
+            // Fetch from localStorage, or use default if it doesn't exist yet
+            const savedAnnouncement = localStorage.getItem('globalAnnouncement') || defaultAnnouncement;
+            
+            document.getElementById('announcement-text').innerText = savedAnnouncement;
+        }
+
+        // Run on page load
+        window.onload = loadAnnouncement;
+    </script>
+</body>
+</html>
