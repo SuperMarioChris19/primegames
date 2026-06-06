@@ -123,7 +123,7 @@
     </main>
 
     <script>
-        const ENCRYPTED_PASSCODE = [29, 8, 24, 22, 29, 14, 17, 15, 3, 14, 29, 27, 18, 7, 23, 85, 66, 82];
+        const PASSCODE = "Mikejacksonhehe123";
 
         // Decrypts the array back into the actual password string to check against user input
         function decryptPasscode(arr) {
@@ -139,7 +139,7 @@
             const errorElement = document.getElementById('auth-error');
             
             // Decrypt the secret key on the fly
-            const correctPasscode = decryptPasscode(ENCRYPTED_PASSCODE);
+            const correctPasscode = (PASSCODE);
 
             if (inputCode === correctPasscode) {
                 // Reveal configuration elements, hide entry gate
