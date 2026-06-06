@@ -123,14 +123,26 @@
     </main>
 
     <script>
-        // Set your custom admin key phrase here
-        const MASTER_CODE = "AdminPrime123";
+        // Secure SHA-256 fingerprint of "Hehemikejackson123"
+        const MASTER_HASH = "fae75871f30894be60bc03b1236814cb282713f0607da19c9ec94c1f96440263";
 
-        function verifyAdminCode() {
+        // Converts a plain-text string into an un-reversible hexadecimal hash signature
+        async function hashString(string) {
+            const utf8 = new TextEncoder().encode(string);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(bytes => bytes.toString(16).padStart(2, '0')).join('');
+        }
+
+        async function verifyAdminCode() {
             const inputCode = document.getElementById('admin-code').value;
             const errorElement = document.getElementById('auth-error');
 
-            if (inputCode === MASTER_CODE) {
+            // Generate a hash matching the user's input string
+            const hashedInput = await hashString(inputCode);
+
+            // Compare generated hash against the secure master record
+            if (hashedInput === MASTER_HASH) {
                 // Reveal configuration elements, hide entry gate
                 document.getElementById('auth-section').classList.add('hidden');
                 document.getElementById('control-section').classList.remove('hidden');
@@ -138,6 +150,7 @@
                 // Pre-populate the input area with current statement context
                 document.getElementById('new-announcement').value = 
                     localStorage.getItem('globalAnnouncement') || "";
+                errorElement.innerText = ""; 
             } else {
                 errorElement.innerText = "Invalid passcode credentials. Try again.";
             }
