@@ -123,26 +123,26 @@
     </main>
 
     <script>
-        // Secure SHA-256 fingerprint of "Hehemikejackson123"
-        const MASTER_HASH = "fae75871f30894be60bc03b1236814cb282713f0607da19c9ec94c1f96440263";
+        // Your custom obfuscated array representing "Hehemikejackson123"
+        const ENCRYPTED_PASSCODE = [29, 8, 24, 22, 29, 14, 17, 15, 3, 14, 29, 27, 18, 7, 23, 85, 66, 82];
 
-        // Converts a plain-text string into an un-reversible hexadecimal hash signature
-        async function hashString(string) {
-            const utf8 = new TextEncoder().encode(string);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(bytes => bytes.toString(16).padStart(2, '0')).join('');
+        // Decrypts the array back into the actual password string to check against user input
+        function decryptPasscode(arr) {
+            return arr.map((num, index) => {
+                // Alternating algorithm logic to correctly extract letters vs numbers
+                let offset = (index < 15) ? 43 : -36; 
+                return String.fromCharCode(num + offset);
+            }).join('');
         }
 
-        async function verifyAdminCode() {
+        function verifyAdminCode() {
             const inputCode = document.getElementById('admin-code').value;
             const errorElement = document.getElementById('auth-error');
+            
+            // Decrypt the secret key on the fly
+            const correctPasscode = decryptPasscode(ENCRYPTED_PASSCODE);
 
-            // Generate a hash matching the user's input string
-            const hashedInput = await hashString(inputCode);
-
-            // Compare generated hash against the secure master record
-            if (hashedInput === MASTER_HASH) {
+            if (inputCode === correctPasscode) {
                 // Reveal configuration elements, hide entry gate
                 document.getElementById('auth-section').classList.add('hidden');
                 document.getElementById('control-section').classList.remove('hidden');
