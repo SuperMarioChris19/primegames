@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Docs - Document Viewer</title>
+    <style>
+        body { margin: 0; padding: 0; background: #fff; font-family: sans-serif; overflow: hidden; }
+        iframe { width: 100vw; height: 100vh; border: none; }
+    </style>
+</head>
+<body>
+    <iframe src="./index.html"></iframe>
+
+    <script>
+        // Forces the browser address bar to show your disguised portal pathway
+        if (!window.location.href.includes('googledocs.prime.edu')) {
+            window.history.replaceState(null, '', '/googledocs.prime.edu/shared/document_viewer.html');
+        }
+    </script>
+</body>
+</html>
